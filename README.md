@@ -10,8 +10,8 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 <!-- badges: end -->
 
 The goal of bdtests is to facilitate package development, testing,
-checks, and benchmarking - a ‘devtools like’ package for bdverse
-packages development.  
+benchmarking and pre-release checklists - a ‘devtools like’ package for
+bdverse packages development.  
   
 :pencil: <span style="color: red;">**This is an initial draft, just a
 basic skeleton and a place to store ideas**.</span> :pencil:
