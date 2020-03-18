@@ -1,5 +1,5 @@
 Package: bdtests
-Title: Testing Data and Testing Scripts for the 'bdverse'
+Title: An Initial Draft for a 'devtools like' Package for the bdverse
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Tomer",
@@ -7,7 +7,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "tomer.gu@gmail.com",
            comment = c(ORCID = "0000-0003-1557-8596"))
-Description: Testing data from many biodiversity data aggregators, and various QA and benchmarking scripts.
+Description: Generating testing data from various biodiversity data aggregators, QA and benchmarking scripts, checklists of sorts.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

@@ -42,3 +42,7 @@ use_pipe()
 use_version()
 
 spelling::spell_check_package()
+
+# README badges https://usethis.r-lib.org/reference/badges.html
+  # Lifecycle badges: https://www.tidyverse.org/lifecycle/
+  usethis::use_lifecycle_badge("experimental")
