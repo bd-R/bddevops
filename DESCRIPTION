@@ -1,13 +1,23 @@
 Package: bdtests
-Title: What the Package Does (One Line, Title Case)
+Title: Testing Data and Testing Scripts for the 'bdverse'
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Tomer",
+           family = "Gueta",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: What license it uses
+           email = "tomer.gu@gmail.com",
+           comment = c(ORCID = "0000-0003-1557-8596"))
+Description: Testing data from many biodiversity data aggregators, and various QA and benchmarking scripts.
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
+Suggests: 
+    testthat,
+    spelling,
+    styler,
+    sinew,
+    goodpractice
+Language: en-US
+RoxygenNote: 6.1.1
+Imports: 
+    magrittr
