@@ -10,14 +10,14 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 <!-- badges: end -->
 
 The goal of bdtests is to facilitate package development, testing,
-checks, and benchmarking ג€” a devtools-like package for bdverse package
-system. This is an initial draft, a basic skeleton and a place to store
-ideas.
+checks, and benchmarking - a ‘devtools like’ package for bdverse
+packages development. This is an initial draft, a basic skeleton and a
+place to store ideas.
 
 ## Installation
 
-bdtests is an internal bdverse packge; thus, no CRAN release is
-expected. You can install bdtests from this repository with:
+bdtests is an in-house packge; thus, no CRAN release is expected. You
+can install bdtests from this repository with:
 
 ``` r
 remotes::install_github("bd-R/bdtests")
