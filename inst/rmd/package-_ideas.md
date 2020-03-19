@@ -8,3 +8,7 @@ Package Ideas
 ## Using exampletestr
 
 <https://github.com/rorynolan/exampletestr>
+
+## Using roxytest
+
+<https://github.com/mikldk/roxytest>
