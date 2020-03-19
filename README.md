@@ -7,6 +7,8 @@
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![R build
+status](https://github.com/bd-R/bdtests/workflows/R-CMD-check/badge.svg)](https://github.com/bd-R/bdtests/actions)
 <!-- badges: end -->
 
 The goal of bdtests is to facilitate package development, testing,

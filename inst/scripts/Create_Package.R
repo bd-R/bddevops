@@ -46,3 +46,12 @@ spelling::spell_check_package()
 # README badges https://usethis.r-lib.org/reference/badges.html
   # Lifecycle badges: https://www.tidyverse.org/lifecycle/
   usethis::use_lifecycle_badge("experimental")
+
+
+# Add Github links to DESCRIPTION
+usethis::use_github_links()
+
+# Add GitHub Actions for continuous integration checks
+devtools::install_github("r-lib/usethis") # The development version is needed for now
+usethis::use_github_action_check_full() # The full setup (tidyverse like)
+usethis::use_github_action_check_release() # A simple setup
