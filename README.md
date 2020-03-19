@@ -18,7 +18,7 @@ basic skeleton and a place to store ideas**.</span> :pencil:
 
 ## Installation
 
-bdtests is an in-house packge; thus, no CRAN release is expected. You
+bdtests is an in-house package; thus, no CRAN release is expected. You
 can install bdtests from this repository with:
 
 ``` r

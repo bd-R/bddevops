@@ -24,7 +24,7 @@ The goal of bdtests is to facilitate package development, testing, benchmarking 
 :pencil: <span style="color: red;">**This is an initial draft, just a basic skeleton and a place to store ideas**.</span> :pencil:
 
 ## Installation
-bdtests is an in-house packge; thus, no CRAN release is expected.
+bdtests is an in-house package; thus, no CRAN release is expected.
 You can install bdtests from this repository with:
 
 ``` r
