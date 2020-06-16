@@ -51,6 +51,9 @@ min_r_version <- function(package = "ggplot2", exclude_main_pkg = TRUE) {
   return(vs$min)
 }
 
+dep <- gtools::getDependencies("bdverse")
+dep <- rev(dep)
+
 
 library(pkgnet)
 pkgnet:::silence_logger()

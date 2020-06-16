@@ -51,7 +51,8 @@ spelling::spell_check_package()
 # Add Github links to DESCRIPTION
 usethis::use_github_links()
 
-# Add GitHub Actions for continuous integration checks
+# Add GitHub Actions for continuous integration checks +  add a badge for CI
 devtools::install_github("r-lib/usethis") # The development version is needed for now
 usethis::use_github_action_check_full() # The full setup (tidyverse like)
 usethis::use_github_action_check_release() # A simple setup
+
