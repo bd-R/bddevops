@@ -4,7 +4,8 @@
 \name{idigbio_10k_latest}
 \alias{idigbio_10k_latest}
 \title{idigbio data with newly parsed 10,000 records (Timestamp: Tue Dec 17 18:55:27 2019)}
-\format{A data frame with 10,000 rows and 113 variables:
+\format{
+A data frame with 10,000 rows and 113 variables:
 \describe{
   \item{\code{associatedsequences}}{logical COLUMN_DESCRIPTION}
   \item{\code{barcodevalue}}{logical COLUMN_DESCRIPTION}
@@ -89,7 +90,8 @@
   \item{\code{version}}{logical COLUMN_DESCRIPTION}
   \item{\code{waterbody}}{character COLUMN_DESCRIPTION}
   \item{\code{prov}}{character COLUMN_DESCRIPTION}
-}}
+}
+}
 \usage{
 idigbio_10k_latest
 }

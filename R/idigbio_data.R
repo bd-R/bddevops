@@ -85,7 +85,7 @@
 #'   \item{\code{version}}{logical COLUMN_DESCRIPTION}
 #'   \item{\code{waterbody}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{prov}}{character COLUMN_DESCRIPTION}
-#'}
+#' }
 #' @details DETAILS
 "idigbio_1r"
 
@@ -177,7 +177,7 @@
 #'   \item{\code{version}}{logical COLUMN_DESCRIPTION}
 #'   \item{\code{waterbody}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{prov}}{character COLUMN_DESCRIPTION}
-#'}
+#' }
 #' @details DETAILS
 "idigbio_1k"
 
@@ -269,7 +269,7 @@
 #'   \item{\code{version}}{logical COLUMN_DESCRIPTION}
 #'   \item{\code{waterbody}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{prov}}{character COLUMN_DESCRIPTION}
-#'}
+#' }
 #' @details DETAILS
 "idigbio_10k"
 
@@ -360,6 +360,6 @@
 #'   \item{\code{version}}{logical COLUMN_DESCRIPTION}
 #'   \item{\code{waterbody}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{prov}}{character COLUMN_DESCRIPTION}
-#'}
+#' }
 #' @details DETAILS
 "idigbio_10k_latest"

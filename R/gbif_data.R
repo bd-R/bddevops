@@ -113,7 +113,7 @@
 #'   \item{\code{georeferenceProtocol}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{verbatimCoordinateSystem}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{georeferenceSources}}{character COLUMN_DESCRIPTION}
-#'}
+#' }
 #' @details DETAILS
 "gbif_1r"
 
@@ -232,7 +232,7 @@
 #'   \item{\code{georeferenceProtocol}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{verbatimCoordinateSystem}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{georeferenceSources}}{character COLUMN_DESCRIPTION}
-#'}
+#' }
 #' @details DETAILS
 "gbif_1k"
 
@@ -351,7 +351,7 @@
 #'   \item{\code{georeferenceProtocol}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{verbatimCoordinateSystem}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{georeferenceSources}}{character COLUMN_DESCRIPTION}
-#'}
+#' }
 #' @details DETAILS
 "gbif_10k"
 
@@ -472,6 +472,6 @@
 #'   \item{\code{identificationID}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{informationWithheld}}{character COLUMN_DESCRIPTION}
 #'   \item{\code{http://unknown.org/recordedByOrcid}}{character COLUMN_DESCRIPTION}
-#'}
+#' }
 #' @details DETAILS
 "gbif_10k_latest"

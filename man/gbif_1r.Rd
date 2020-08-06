@@ -4,7 +4,8 @@
 \name{gbif_1r}
 \alias{gbif_1r}
 \title{gbif data with 1 record}
-\format{A data frame with 1 rows and 111 variables:
+\format{
+A data frame with 1 rows and 111 variables:
 \describe{
   \item{\code{name}}{character COLUMN_DESCRIPTION}
   \item{\code{longitude}}{double COLUMN_DESCRIPTION}
@@ -117,7 +118,8 @@
   \item{\code{georeferenceProtocol}}{character COLUMN_DESCRIPTION}
   \item{\code{verbatimCoordinateSystem}}{character COLUMN_DESCRIPTION}
   \item{\code{georeferenceSources}}{character COLUMN_DESCRIPTION}
-}}
+}
+}
 \usage{
 gbif_1r
 }

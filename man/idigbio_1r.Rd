@@ -4,7 +4,8 @@
 \name{idigbio_1r}
 \alias{idigbio_1r}
 \title{idigbio data with 1 record}
-\format{A data frame with 1 rows and 83 variables:
+\format{
+A data frame with 1 rows and 83 variables:
 \describe{
   \item{\code{associatedsequences}}{list COLUMN_DESCRIPTION}
   \item{\code{barcodevalue}}{logical COLUMN_DESCRIPTION}
@@ -89,7 +90,8 @@
   \item{\code{version}}{logical COLUMN_DESCRIPTION}
   \item{\code{waterbody}}{character COLUMN_DESCRIPTION}
   \item{\code{prov}}{character COLUMN_DESCRIPTION}
-}}
+}
+}
 \usage{
 idigbio_1r
 }

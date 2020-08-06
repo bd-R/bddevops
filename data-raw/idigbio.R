@@ -10,8 +10,11 @@ limit_val <- 10000 # The number of records to download
 
 
 x1 <- occ(from = "idigbio", limit = limit_val, idigbioopts = list(rq = list(
-  kingdom = c("Animalia","Plantae","Archaea", "Bacteria",
-              "Chromista", "Fungi", "Protozoa", "Viruses")))) # Timestamp: ##------ Thu Jan 02 12:43:46 2020 ------##
+  kingdom = c(
+    "Animalia", "Plantae", "Archaea", "Bacteria",
+    "Chromista", "Fungi", "Protozoa", "Viruses"
+  )
+))) # Timestamp: ##------ Thu Jan 02 12:43:46 2020 ------##
 
 # Data with 1 record
 idigbio_1r <- x1$idigbio$data$custom_query[1, ]

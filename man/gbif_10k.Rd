@@ -4,7 +4,8 @@
 \name{gbif_10k}
 \alias{gbif_10k}
 \title{gbif data with 10,000 records}
-\format{A data frame with 10000 rows and 111 variables:
+\format{
+A data frame with 10000 rows and 111 variables:
 \describe{
   \item{\code{name}}{character COLUMN_DESCRIPTION}
   \item{\code{longitude}}{double COLUMN_DESCRIPTION}
@@ -117,7 +118,8 @@
   \item{\code{georeferenceProtocol}}{character COLUMN_DESCRIPTION}
   \item{\code{verbatimCoordinateSystem}}{character COLUMN_DESCRIPTION}
   \item{\code{georeferenceSources}}{character COLUMN_DESCRIPTION}
-}}
+}
+}
 \usage{
 gbif_10k
 }

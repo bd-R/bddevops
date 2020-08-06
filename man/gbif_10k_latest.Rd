@@ -4,7 +4,8 @@
 \name{gbif_10k_latest}
 \alias{gbif_10k_latest}
 \title{gbif data with newly parsed 10,000 records (Timestamp: Tue Dec 17 18:55:27 2019)}
-\format{A data frame with 10,000 rows and 113 variables:
+\format{
+A data frame with 10,000 rows and 113 variables:
 \describe{
   \item{\code{name}}{character COLUMN_DESCRIPTION}
   \item{\code{longitude}}{double COLUMN_DESCRIPTION}
@@ -119,7 +120,8 @@
   \item{\code{identificationID}}{character COLUMN_DESCRIPTION}
   \item{\code{informationWithheld}}{character COLUMN_DESCRIPTION}
   \item{\code{http://unknown.org/recordedByOrcid}}{character COLUMN_DESCRIPTION}
-}}
+}
+}
 \usage{
 gbif_10k_latest
 }
