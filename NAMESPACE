@@ -2,4 +2,6 @@
 
 export("%>%")
 export(foo)
+export(get_local_branch)
+export(get_report)
 importFrom(magrittr,"%>%")
