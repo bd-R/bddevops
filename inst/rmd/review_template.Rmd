@@ -1,0 +1,107 @@
+---
+title: "Get review of your R package "
+author: "Sunny Dhoke, Tomer Gueta"
+date: "06/08/2020"
+output:
+  html_document: 
+    toc: true
+    toc_float: true
+    toc_collapsed: false
+toc_depth: 3
+number_sections: true
+
+---
+
+
+```{r include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Current Branch 
+
+This is the branch of a repository you are currently working on.
+The last word is your local branch name. You can see if it is local and is HEAD or not
+along with git reference.
+
+
+```{r print branch name}
+bdtests::get_local_branch()
+```
+
+
+## Commands for checks done by rOpenSci reviewer.
+
+### Install package
+
+We are now installing the package.
+
+```{r install package using devtools}
+devtools::install(dependencies = TRUE)
+```
+
+### Following good practices?
+
+Running `goodpractices` package on your R package.
+
+```{r installing goodpractice}
+if (!require(goodpractice)) {
+  install.packages("goodpractice", repos = "https://cloud.r-project.org/")
+}
+```
+
+```{r running goodpractice on package}
+
+goodpractice::gp()
+```
+
+### Spelling 
+
+See if there are any spelling mistakes. Yes,they can happen. :P
+
+```{r doing another checking spell}
+
+spelling::spell_check_package()
+```
+and for specifically `README.Rmd` file
+
+```{r doing another checking spell}
+
+spelling::spell_check_files("README.Rmd")
+```
+
+### Test Coverage
+
+More than 75 is a good starting point. Can we go higher?
+
+```{r install covr}
+if (!require(covr)) {
+  install.packages("covr", repos = "https://cloud.r-project.org/")
+}
+```
+
+```{r check package coverage}
+covr::package_coverage()
+```
+
+If not 75% then additional tests and explanation needed before sent for review.
+
+
+### Devtools check() 
+
+```{r check if RCMD works} 
+devtools::check()
+```
+
+### Devtools test() 
+
+```{r run tests with RCMD check}
+devtools::test()
+```
+
+
+### CI 
+
+Use code coverage report to identify untested lines and add further tests.
+[Official rOpenSci CI doc](https://devguide.ropensci.org/ci.html#coverage)
+

@@ -1,0 +1,142 @@
+---
+title: "Custom Branch Template"
+author: "Sunny Dhoke, Tomer Gueta"
+date: "03/08/2020"
+output:
+  rmarkdown::html_document:
+    theme: lumen
+    highlight: espresso 
+    toc: true
+    toc_float: true
+    toc_collapsed: false
+toc_depth: 3
+number_sections: true
+params:
+  username:
+    label: Enter username or organization name
+    value: bd-R
+    choices:
+    - ropensci
+    - bd-R
+    - r-lib
+    - tom-gu
+    - sunn-e
+  repository:
+    label: 'GitHub repository name(default: testthat)'
+    value: testthat
+  branch:
+    label: GiHub custom branch name,leave blank for default
+    value: HEAD
+  depen:
+    label: dependencies
+    value: TRUE
+  force:
+    label: Want to force install?
+    value : FALSE
+
+---
+
+```{r include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+## Install from custom branch of a repository
+
+```{r whole repo name}
+complete_reponame <- paste0(params$username, "/", params$repository)
+print(complete_reponame)
+```
+
+```{r github install}
+remotes::install_github(repo = complete_reponame,
+                        ref = params$branch,
+                        dependencies = params$depen,
+                        force = params$force)
+```
+
+## load the package
+
+```{r loadcustom package}
+
+library(params$repository,character.only = TRUE)
+```
+
+## Commands for checks done by rOpenSci reviewer.
+
+### Install package
+
+```{r for reviewers}
+#devtools::install(params$repository,dependencies = TRUE)
+```
+
+### Following good practices?
+
+Run following command to find errors and style issues. 
+You can justify why such style for package,if following any particular one.
+
+```{r installing goodpractice}
+if(!require(goodpractice))
+  install.packages("goodpractice",
+                   repos = "https://cloud.r-project.org/")
+
+```
+
+```{r running goodpractice on package}
+
+goodpractice::gp(params$repository)
+```
+
+### Spelling 
+
+
+
+```{r doing another checking spell}
+
+#spelling::spell_check_package(pkg = params$repository)
+
+```
+and for README.Rmd
+
+
+### Test coverage 75% above?
+
+```{r install covr}
+if(!require(covr)) 
+  install.packages("covr",repos = "https://cloud.r-project.org/")
+```
+
+```{r check package coverage}
+#library(params$repository,character.only = TRUE)
+#covr::package_coverage(params$repository)
+```
+If not,additional tests and explanation needed before sent for review.
+
+
+### Does it pass RCMD check?
+
+```{r check if RCMD library works} 
+#library(rcmdcheck)
+#rcmdcheck(params$repository)
+
+```
+
+```{r check if RCMD works} 
+#devtools::check(pkg = params$repository) 
+```
+
+```{r run tests with RCMD check}
+#devtools::test(pkg = params$repository)
+```
+
+
+### CI 
+
+Use code coverage report to identify untested lines and add further tests.
+[Official rOpenSci CI doc](https://devguide.ropensci.org/ci.html#coverage)
+
+
+## Notes
+
+

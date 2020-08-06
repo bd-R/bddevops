@@ -1,0 +1,270 @@
+---
+title: "bddwc report"
+author: "Sunny Dhoke, Tomer Gueta"
+date: "02/08/2020"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    toc_collapsed: false
+toc_depth: 3
+number_sections: true
+highlight: github
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+```
+
+## Introduction
+
+Hi there, this is Sunny from bdverse team. Today I'm going to tell a little bit about `bddwc` package/API from `bdverse` ecosystem. 
+
+So what it `bddwc` anyways? I'm glad you asked, it's a R package/API that works as backend for bddwc.app shiny app. Basically we have two components, `bddwc` and `bddwc.app`. For this report, let's stick to only `bddwc` package/API.
+
+Before jumping to package let's see what problem it is trying to solve, because our philosophy - Everything is built out of necessity - which is just cool way to say "Necessity is the mother of ~~invention~~ bdverse!!"
+
+What was the necessity you ask, ahh, turns out, the biodiversity generates tons of data, that's a good thing, right? In a world of Artificial Intelligence and Big Data, that is what is expected, tons of data. Even I thought so, but problem is, the data that is captured/generated throughout the domain is not in particular standard format. Reasons can be many as to why the data is not in standard format, different methodologies(Science..duh!), various other data providers who have been there for so long even before any standardization existed or atleast agreed upon. 
+
+## A little bit context
+
+Science loves reproducibility, and more so standardization, because it saves a lot of time and makes sure we progress in unison with what is already done. So instead of trying to restrict users in capturing data in so and so format, why not let researchers do their work and leave the standardization process to us? You are right, I could have summarized that this package does standardization of data, I love building contexts.
+
+## Darwin Core feat. BdDwC
+
+The Darwin Core maintenance group maintains a standrad for biodiversity information called `Darwin Core`. This package helps you in standardizing many field names in your dataset according to Darwin Core standards. Why standardize? Again, it's so that the rest of `bdverse` friend packages(other `bdverse` packages) can handle the data in a predictable way as well as you can publish the dataset for other researchers and data enthusiasts. Standardizing data is a fundamental step in any Data dependent scientific pipeline. 
+
+## Let's get our hands dirty
+
+### Install
+
+I'm assuming you have installed the package using
+
+```{r Install CRAN version}
+install.packages("bdDwC")
+```
+or the development version
+
+```{r Install GitHub version}
+devtools::install_github("bd-R/bdDwC")
+```
+
+### Load
+
+If you have installed the package, let's load it too. use follo
+```{r Load library}
+library(bdDwC)
+```
+
+
+## The Darwinizer
+
+`darwinizer.R` is a script that contains following functions that help `bdDwC` achive differe tasks. It mainly consists of three functionalities
+
+- Darwinize Names
+- Rename your Dataset according to those Darwinized names
+- Link Old/New names for checkboxes
+
+### darwinize_names
+
+This function `darwinize_names` ,as name suggest, darwinizes given names using reference dataset/dictionary. The reference dataset in our case is Darwin Core.
+
+```{r darwinize_names}
+darwinize_names <- function(data_user = NULL, data_dwc = NULL){
+
+  # ~~~~~~~~~~~~~~~~~~~~~
+  # Data preparation
+  # ~~~~~~~~~~~~~~~~~~~~~
+
+  # Test if user data is good
+  test_data_user(data_user)
+  # Test if dictionary data is good
+  test_data_dwc(data_dwc)
+
+  # Prepare user data
+  # Extract names to be Darwinized
+  data_user_name <- data.frame(
+    fieldname = trimws(unique(colnames(data_user))),
+    stringsAsFactors = FALSE
+  )
+
+  # Prepare dictionary data
+  # Subset and remove missing fields
+  data_dwc <- clean_dwc(data_dwc)
+
+  # Create object to store final result
+  result <- list()
+
+  # ~~~~~~~~~~~~~~~~~~~~~
+  # Identical matching
+  # ~~~~~~~~~~~~~~~~~~~~~
+
+  # First Darwinization: Find identical matches
+  # Given that user fieldname matches Darwin standard name
+  result[["identical_raw"]] <- merge(
+    data_user_name, data_dwc,
+    by.x = "fieldname", by.y = "standard"
+  )
+  if (nrow(result[["identical_raw"]]) > 0) {
+    result[["identical_clean"]] <- data.frame(
+      # This is identical match so assigning twice
+      name_old = unique(result[["identical_raw"]]$fieldname),
+      name_new = unique(result[["identical_raw"]]$fieldname),
+      match_type = "Identical",
+      stringsAsFactors = FALSE
+    )
+  } else {
+    warning("No names had identical matches")
+    result[["identical_clean"]] <- data.frame()
+  }
+  if (nrow(result[["identical_clean"]]) == nrow(data_user_name)) {
+    # Return result if all fields were matched
+    message("All names had identical matches")
+    return(result[["identical_clean"]])
+  }
+
+  # ~~~~~~~~~~~~~~~~~~~~~
+  # Lowercase matching
+  # ~~~~~~~~~~~~~~~~~~~~~
+
+  # Subset data for further filtering
+  # These user columns weren't matched
+  data_user_name_sub <- data_user_name[
+    !data_user_name$fieldname %in% result[["identical_clean"]]$name_new,
+  ]
+  # Transform names into lowercase
+  data_user_name_sub <- data.frame(
+    fieldname_low = tolower(data_user_name_sub),
+    fieldname_orig = data_user_name_sub,
+    stringsAsFactors = FALSE
+  )
+
+  # These reference fields weren't used
+  data_dwc_sub <- data_dwc[
+    !data_dwc$standard %in% result[["identical_clean"]]$name_new,
+  ]
+  data_dwc_sub$fieldname_low <- tolower(data_dwc_sub$fieldname)
+
+  # Match using lowecase
+  result[["lower_raw"]] <- merge(
+    data_user_name_sub,
+    data_dwc_sub,
+    "fieldname_low"
+  )
+  if (nrow(result[["lower_raw"]]) > 0) {
+    result[["lower_clean"]] <- data.frame(
+      name_old = result[["lower_raw"]]$fieldname_orig,
+      name_new = result[["lower_raw"]]$standard,
+      match_type = "Darwinized",
+      stringsAsFactors = FALSE
+    )
+  } else {
+    warning("No names had lower case matches")
+    result[["lower_clean"]] <- data.frame()
+  }
+}
+```
+
+The function returns new(standard) and old(fieldname) names. 
+
+#### Data preparation
+
+First we check if user data is good with our helper function `test_data_user` from `test.R` script.
+Similarly, we check if our dictionary data is good or not with help of `test_data_dwc` function from the same script.
+
+We then prepare the data. We extract names that need to be darwinized. It is store in ` data_user_name` variable.
+
+We then prepare dictionary data and create a subset. We do not need missing fields. We then create list object called `result` to store our results in following operations.
+
+#### Identical matching
+
+We first find the exact/identical matches i.e. a condition where `fieldname` matches `standard name`
+
+#### Lowercase matching
+
+After identical matches are done, we move on to lowercase matching. Here the matches are done on the basis of lowercase matching i.e. convert fieldnames to lowercase and then match to standard names.
+
+#### Output
+
+Then finally, the result of previous two matching conditions is returned as one final `result`.
+
+### rename_user_data
+
+#### Renaming
+
+The `rename_user_data` is used to rename user data.
+We extract user names and then merge that with renamed data that is passed to the function.
+
+```{r rename_user_data}
+
+rename_user_data <- function(data_user = NULL, data_renamed = NULL) {
+
+  names_user <- data.frame(
+    name_old = trimws(colnames(data_user)), stringsAsFactors = FALSE
+  )
+
+   result <- merge(names_user, data_renamed, "name_old", all.x = TRUE)
+
+  if (all(is.na(result$name_new))) {
+    warning("No renaming could be made")
+    return(NULL)
+  } else {
+       result <- result[match(names_user$name_old, result$name_old), ]
+    colnames(data_user) <- ifelse(
+      is.na(result$name_new), result$name_old, result$name_new
+    )
+    return(data_user)
+  }
+}
+```
+
+### link_old_new
+
+
+
+Ths function helps to combine fieldname and standard names. 
+
+```{r link_old_new}
+link_old_new <- function(data = NULL, linker = "->") {
+  # Test if dictionary data is good
+  test_data_renamed(data)
+  if (!is.character(linker)) {
+    stop("Linker should be a character string")
+  }
+  result <- apply(data, 1, function(x) {
+    paste(x[1], linker, "\n", x[2])
+  })
+  result <- as.character(result)
+  return(result)
+}
+```
+
+#### Link Old/New Name for Checkboxes
+
+This helps in representing the names in check boxes wherever needed in a shiny app.
+
+## Download Dictionary from cloud and Clean data
+
+`dictionary.R` contains functions to support downloading of data from various data cloud/providers
+
+### download_cloud_data
+
+This function helps in downloading the Darwind Cloud data. It inititally downloads the date. Later it creates a subset of useful columns and then renames them for using in `shiny` apps.
+
+#### Download data from Cloud
+
+The data is taken from `kurator-org`, as previously mentioned, it's github org of the team behind Darwin Core. It checks if downloading is possible if not warnings are shown to user. Upon successful download, the data is validated and cleaned.
+
+### clean_dwc
+
+This function helps in cleaning the empty or non-essential fields from dictionary.
+
+#### Clean dictionary data
+
+### get_darwin_core_info
+
+This helped function takes info about darwin core from official [site](http://tdwg.github.io/dwc/terms/) of Darwin Core
+
+#### Retrieve Information about Darwin Core Terms
+
+The paths are checked if they still exist on the Darwin core site.
