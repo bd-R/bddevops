@@ -31,3 +31,4 @@ remotes::install_github("bd-R/bdtests")
 
 bdtests is part of bdverse QA framework, for more details, see the QA
 \[to add link\] section in the development guide.
+
