@@ -101,7 +101,7 @@ jobs:
 
 # experiment
       - name: "[Stage] Script"
-        run: Rscript -e "remotes::install_github("bd-R/bdtests", ref = "dev", depenedencies = FALSE)" -e 'tic::script()'
+        run: Rscript -e "remotes::install_github('bd-R/bdtests', ref = 'dev', depenedencies = FALSE)" -e "tic::script()"
 
       - name: "[Stage] After Success"
         if: matrix.config.os == 'macOS-latest' && matrix.config.r == 'release'
