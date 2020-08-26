@@ -41,28 +41,32 @@ bdtests is part of bdverse QA framework, for more details, see the QA  [to add l
 
 
 <details open>
-<summary><h4>User Triggered (Push & PR)</h4></summary>
+<summary><b>User Triggered (Push & PR)</b></summary>
 <br>
 
-| OS; r :point_down: \| [Repository]-[Dependencies] ::point_right: | [Master]-[Master] | [Dev]-[Master]| [Dev-Dev] | 
-|-------|---|---|---|
+| OS-ver; r-ver | [Master] - [Master] | [Dev] - [Master] | [Dev] - [Dev] |
+|:------|---|---|---|
 | Mac-latest; r-release |![Mac-Mas-Mas](https://github.com/sunn-e/bddummy/workflows/Mac-Mas-Mas/badge.svg?branch=master)|![Mac-Dev-Mas](https://github.com/sunn-e/bddummy/workflows/Mac-Dev-Mas/badge.svg?branch=dev) |![Mac-Dev-Dev](https://github.com/sunn-e/bddummy/workflows/Mac-Dev-Dev/badge.svg?branch=dev) |
 | Win-latest; r-release |![Win-Mas-Mas](https://github.com/sunn-e/bddummy/workflows/Win-Mas-Mas/badge.svg?branch=master)|![Win-Dev-Mas](https://github.com/sunn-e/bddummy/workflows/Win-Dev-Mas/badge.svg)|![Win-Dev-Dev](https://github.com/sunn-e/bddummy/workflows/Win-Dev-Dev/badge.svg)|
 | Ubuntu-latest; r-release |![Ubu-Mas-Mas](https://github.com/sunn-e/bddummy/workflows/Ubu-Mas-Mas/badge.svg)|![Ubu-Dev-Mas](https://github.com/sunn-e/bddummy/workflows/Ubu-Dev-Mas/badge.svg?branch=dev)|![Ubu-Dev-Dev](https://github.com/sunn-e/bddummy/workflows/Ubu-Dev-Dev/badge.svg?branch=dev)|
 | Multi-CI |![MultiCI-Mas-Mas](https://github.com/sunn-e/bddummy/workflows/Multi-CI-tic-Mas-Mas/badge.svg)|![MultiCI-Dev-Mas](https://github.com/sunn-e/bddummy/workflows/Multi-CI-tic-Dev-Mas/badge.svg?branch=dev)|![MultiCI-Dev-Dev](https://github.com/sunn-e/bddummy/workflows/Multi-CI-tidyverse-Mas-Mas/badge.svg?branch=master)|
+
+<b>[Repository] - [Dependencies]</b>
 
 </details>
 
 
 <details>
-<summary><h4>Scheduled (Daily)</h4></summary>
+<summary><b>Scheduled (Daily)</b></summary>
 <br>
 
-| OS; r :point_down: \| [Repository]-[Dependencies] ::point_right: | [Master]-[Master] | [Dev]-[Master]| [Dev-Dev] | 
-|------------|---|---|---|
+| OS-ver; r-ver | [Master] - [Master] | [Dev] - [Master] | [Dev] - [Dev] |
+|:-----------|---|---|---|
 | Mac-latest; r-release |![Mac-Mas-Mas](https://github.com/sunn-e/bddummy/workflows/Mac-Mas-Mas/badge.svg?branch=master)|![Mac-Dev-Mas](https://github.com/sunn-e/bddummy/workflows/Mac-Dev-Mas/badge.svg?branch=dev) |![Mac-Dev-Dev](https://github.com/sunn-e/bddummy/workflows/Mac-Dev-Dev/badge.svg?branch=dev) |
 | Win-latest; r-release |![Win-Mas-Mas](https://github.com/sunn-e/bddummy/workflows/Win-Mas-Mas/badge.svg?branch=master)|![Win-Dev-Mas](https://github.com/sunn-e/bddummy/workflows/Win-Dev-Mas/badge.svg)|![Win-Dev-Dev](https://github.com/sunn-e/bddummy/workflows/Win-Dev-Dev/badge.svg)|
 | Ubuntu-latest; r-release |![Ubu-Mas-Mas](https://github.com/sunn-e/bddummy/workflows/Ubu-Mas-Mas/badge.svg)|![Ubu-Dev-Mas](https://github.com/sunn-e/bddummy/workflows/Ubu-Dev-Mas/badge.svg?branch=dev)|![Ubu-Dev-Dev](https://github.com/sunn-e/bddummy/workflows/Ubu-Dev-Dev/badge.svg?branch=dev)|
 | Multi-CI |![MultiCI-Mas-Mas](https://github.com/sunn-e/bddummy/workflows/Multi-CI-tic-Mas-Mas/badge.svg)|![MultiCI-Dev-Mas](https://github.com/sunn-e/bddummy/workflows/Multi-CI-tic-Dev-Mas/badge.svg?branch=dev)|![MultiCI-Dev-Dev](https://github.com/sunn-e/bddummy/workflows/Multi-CI-tidyverse-Mas-Mas/badge.svg?branch=master)|
+
+<b>[Repository] - [Dependencies]</b>
 
 </details>
