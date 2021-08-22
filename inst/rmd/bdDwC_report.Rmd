@@ -1,0 +1,253 @@
+---
+title: 'Testing report'
+date: "`r date()`"
+output:
+  html_document:
+    toc: false
+---
+
+```{r, warning = FALSE, echo = FALSE, message = FALSE}
+library(tidyverse)
+# quiet <- function(x) { 
+#   sink(tempfile()) 
+#   on.exit(sink()) 
+#   invisible(force(x)) 
+# } 
+#rmarkdown::render('./bdDwC_report.Rmd')
+# ATTENTION:for other packages change this link and list of functions(line 135)
+link <- "https://github.com/bd-R/bdDwC/blob/dev/tests/testthat/"
+ss <- data.frame(
+  testthat::test_dir(
+    path = "tests/testthat", 
+    stop_on_failure = FALSE, 
+    reporter = c("list")
+  )
+) %>%
+  .[, -c(6, 7, 9, 10, 13)]
+colnames(ss)[c(4,7)] <- c("test_cases", "time")
+ss$funct <- gsub("^.*\\s\\|\\s", "\\1", ss$test)
+ss$test <- gsub("\\s\\|\\s.*$", "\\1", ss$test)
+ss$file <- paste0("[", ss$file, "](", link, ss$file, ")")
+ss$status <- "PASS"
+ss[which(ss$warning != 0),]$status <- "WARNING"
+ss[which(ss$failed != 0),]$status <- "FAILURE"
+############### for more detailed report in the future#######################
+# ll <- capture.output(
+#   testthat::test_dir(
+#     path = "tests/testthat", 
+#     stop_on_failure = FALSE, 
+#     reporter = c("location")
+#   )
+# )
+# ll <- ll[!ll %in% ""] %>%
+#   .[regexpr("(End\\stest\\:)", .) != 1]
+# location <- list()
+# idx <- which(regexpr("(Start\\stest\\:)", ll) == 1)
+# for (i in seq_along(idx)) {
+#   if (i != length(idx)) {
+#     location[ll[idx[i]]] <- list(ll[(idx[i]+1):(idx[i+1]-1)])
+#   } else {
+#     location[ll[idx[i]]] <- list(ll[(idx[i]+1):length(ll)])
+#   }
+# }
+# location <- data.frame(lapply(location, "length<-", max(lengths(location))))
+# colnames(location) <- gsub("^.*\\.{3}", "\\1", colnames(location))
+# location <- gather(location, na.rm = TRUE)
+# row.names(location) <- NULL
+# location <- separate(location, value, into = c("line", "status"), sep = "\\[")
+# location$status <- gsub("success", "pass", gsub("]", "", location$status)) %>%
+#   toupper()
+# location$line <- sub("[^:]*\\:(.*)\\:[^:]*", "\\1", location$line)
+```
+
+```{r, results = 'asis', warning = FALSE, echo = FALSE, message = FALSE}
+cat("## Unit tests\n\n")
+ss %>% 
+  group_by(file) %>%
+  .[, c(1, 4:8)] %>% 
+  summarize(passed = sum(passed),
+    warning = sum(warning),
+    failed = sum(failed),
+    time = sum(time)
+  ) %>%
+  as.data.frame() %>%
+  knitr::kable(row.names = FALSE) %>%
+  kableExtra::kable_styling(
+    full_width = TRUE,
+    bootstrap_options = c("striped", "hover", "bordered", "condensed")
+  ) %>%
+  kableExtra::column_spec(4, background = "#ff9999") %>%
+  kableExtra::column_spec(3, background = "#ffff99") %>%
+  kableExtra::column_spec(2, background = "#bce4b4") %>%
+  htmltools::HTML() %>%
+  print()
+
+if (sum(ss$failed + ss$warning) > 0) {
+  cat("### Issues\n\n")
+  txt <- capture.output(testthat::test_dir(path = "tests/testthat", stop_on_failure = FALSE, reporter = c("summary")))
+  # clean captured text
+  txt <- txt[!txt %in% ""]
+  txt <- txt[5:(length(txt) - 1)] %>%
+    gsub("\\\033\\[34m|\\\033\\[39m|\\\033\\[38\\;5\\;214m|\\\033\\[32m", "", .)
+  idx2 <- which(regexpr("═{9,}", txt) != -1)
+  txt <- trimws(gsub("═{3,}", "", txt))
+  info <- list()
+  for (i in seq_along(idx2)) {
+    if (i != length(idx2)) {
+      info[txt[idx2[i]]] <- list(txt[(idx2[i]+1):(idx2[i+1]-1)])
+    } else {
+      info[txt[idx2[i]]] <- list(txt[(idx2[i]+1):length(txt)])
+    }
+  }
+  warns <- gsub(
+    "[^|]*\\| (.*) \\([^:]*\\:(.*)\\:.\\)[^-]*\\-(.*)", 
+    "Warning - \\1 - \\2 - \\3", 
+    info[[1]]
+  )
+  info[[2]] <- gsub(
+    ".*(Failure) [^:]*\\:(.*)\\:.\\)[^|]* \\| (.*) .*", 
+    "\\1 - \\3 - \\2", 
+    info[[2]]
+  )
+  idx2 <- which(regexpr("Failure", info[[2]]) != -1)
+  fails <- c()
+  for (i in idx2) {
+    fails <- c(fails, paste0(info[[2]][i], " - ", info[[2]][i+1]))
+  }
+  dd <- data.frame(x = c(warns, fails)) %>%
+    separate(x, into = c("status", "funct", "line", "info"), sep = " - ")
+  dd$status <- toupper(dd$status)
+  detailed <- merge(ss[, c(1:3, 9)], dd, by.x = "funct")
+  detailed$test <- paste0(
+    "[", detailed$test, 
+    gsub("[^]]*(.*)\\)", "\\1", detailed$file), 
+    "#L", detailed$line, ")"
+  )
+
+  if (sum(ss$failed) == 0) {
+    zz <- pkgnet::FunctionReporter$new()$set_package("bdDwC", pkg_path = ".")
+    zz <- zz$calculate_default_measures()
+    net <- zz$nodes[, c("node", "outDegree", "inDegree")]
+    net <- net[order(net$inDegree, net$outDegree), ]
+  } else {
+    # manually taken from successful testing, should be adjusted
+    # after any bigger changes in the package
+    net <- data.frame(
+      node = c("get_darwin_core_info", "link_old_new", "rename_user_data", 
+    "darwinize_names", "download_cloud_data", "test_columns_cloud", 
+    "clean_dwc", "test_cloud", "test_data_dwc", "test_data_renamed", 
+    "test_data_user")
+    )
+  }
+  detailed <- detailed[order(match(detailed$funct, net$node)), ]
+
+  detailed[, c(3:5, 7)] %>%
+    knitr::kable(row.names = FALSE) %>%
+    kableExtra::kable_styling(
+      full_width = TRUE,
+      bootstrap_options = c("striped", "hover", "bordered", "condensed")
+    ) %>%
+    kableExtra::row_spec(
+      which(detailed$status == "WARNING"), background = "#ffff99"
+    ) %>%
+    kableExtra::row_spec(
+      which(detailed$status == "FAILURE"), background = "#ff9999"
+    ) %>%
+    htmltools::HTML() %>%
+    print()
+}
+```
+
+## {.tabset .tabset-pills}
+
+```{r, results = 'asis', warning = FALSE, echo = FALSE, message = FALSE}
+for (k in unique(ss$context)) {
+  cat(paste0("### ", k, "\n\n"))
+  context_x <- ss[ss$context == k, c(2, 3, 10, 4, 7)]
+  context_x %>%
+    knitr::kable(row.names = FALSE) %>%
+    kableExtra::kable_styling(
+      full_width = TRUE,
+      bootstrap_options = c("striped", "hover", "bordered", "condensed")
+    ) %>%
+    kableExtra::row_spec(
+      which(context_x$status == "PASS"), background = "#bce4b4"
+    ) %>%
+    kableExtra::row_spec(
+      which(context_x$status == "WARNING"), background = "#ffff99"
+    ) %>%
+    kableExtra::row_spec(
+      which(context_x$status == "FAILURE"), background = "#ff9999"
+    ) %>%
+    htmltools::HTML() %>%
+    print()
+}
+```
+
+```{r, results = 'asis', warning = FALSE, echo = FALSE, message = FALSE}
+cat("## Coverage\n\n")
+cover <- capture.output(
+  try(covr::package_coverage(), silent = TRUE), 
+  type = "message"
+)
+if (length(cover) > 0) {
+  c <- data.frame(
+    Object = gsub("\\:\\s.*$", "\\1", cover), 
+    Coverage = gsub("^.*:\\s", "\\1", cover)
+  ) 
+  c[1, ] %>%
+    knitr::kable(col.names = NULL) %>%
+    kableExtra::kable_styling(
+      full_width = TRUE,
+      bootstrap_options = c("hover", "bordered", "condensed")
+    ) %>%
+    htmltools::HTML() %>%
+    print()
+  cov <- c[-1, ]$Coverage
+  if (sum(cov != "100.00%") > 0) {
+    cat("### Uncovered files\n\n")
+    c[-1, ] %>%
+      .[cov != "100.00%", ] %>%
+      knitr::kable(row.names = FALSE) %>%
+      kableExtra::kable_styling(
+        full_width = TRUE,
+        bootstrap_options = c("striped", "hover", "bordered", "condensed")
+      ) %>%
+      kableExtra::row_spec(
+        which(cov != "0.00%" & cov != "100.00%"), background = "#ffff99"
+      ) %>%
+      kableExtra::row_spec(
+        which(cov == "0.00%"), background = "#ff9999"
+      ) %>%
+      htmltools::HTML() %>%
+      print()
+  }
+} else {
+  cat("Sorry, can't calculate the coverage, some unit tests have failed.")
+}
+```
+
+<details>
+  <summary>Detailed coverage</summary>
+
+```{r, results = 'asis', warning = FALSE, echo = FALSE, message = FALSE}
+if (length(cover) > 0) {
+  c[-1, ] %>%
+    knitr::kable(row.names = FALSE) %>%
+    kableExtra::kable_styling(
+      full_width = TRUE,
+      bootstrap_options = c("striped", "hover", "bordered", "condensed")
+    ) %>%
+    kableExtra::row_spec(
+      which(cov == "100.00%"), background = "#bce4b4"
+    ) %>%
+    kableExtra::row_spec(
+      which(cov != "0.00%" & cov != "100.00%"), background = "#ffff99"
+    ) %>%
+    kableExtra::row_spec(
+      which(cov == "0.00%"), background = "#ff9999"
+    ) %>%
+    htmltools::HTML() %>%
+    print()
+}
+```
