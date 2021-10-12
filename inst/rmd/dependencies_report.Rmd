@@ -1,0 +1,48 @@
+---
+title: 'Dependencies report'
+subtitle: 'Dev Branches'
+date: "`r date()`"
+output:
+  html_document:
+    toc: false
+---
+
+## {.tabset .tabset-pills}
+
+```{r, results = 'asis', warning = FALSE, echo = FALSE, message = FALSE}
+library(tidyverse)
+source("../script/scrapers.R")
+#rmarkdown::render('./dependencies_report.Rmd')
+repos <- get_repos() # get all bd-R github repos
+repos <- repos %>%
+  # skip packages that have R dir, but no dev branch
+  .[!repos %in% c("bdvis", "bddashboard", "dashboard.demo", "bdtools")]
+dt <- data.frame()
+for (i in repos) {
+  message(i)
+  foo <- pkg_deps(i, "dev") # get bdverse functions in dev branches
+  if (length(foo) != 0) {
+    foo$target_package <- i
+    dt <- rbind(dt, foo)
+  }
+}
+dt <- dt[order(dt$source, dt$function_name), ]
+dt$line <- paste0("[", dt$line, "](", dt$link_line, ")") # link to github
+for (i in unique(dt$source)) {
+  cat(paste("\n\n###", i, "\n\n"))
+  foo <- dt[dt$source == i, -c(1,5)]
+  for (j in unique(foo$function_name)) {
+    cat(
+      paste0(
+        "####\n\n<details>\n  <summary style=\"font-size:18px;\"><b>", 
+        j, "</b></summary>\n\n"
+      )
+    )
+    bar <- foo[foo$function_name == j, c(4, 3, 2)]
+    row.names(bar) <- NULL
+    bar %>%
+      knitr::kable() %>%
+      print()
+  }
+}
+```
