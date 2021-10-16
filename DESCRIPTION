@@ -1,13 +1,22 @@
-Package: bdtests
-Title: An Initial Draft for a 'devtools like' Package for the bdverse
-Version: 0.0.0.9000
-Authors@R: 
-    person(given = "Tomer",
-           family = "Gueta",
-           role = c("aut", "cre"),
-           email = "tomer.gu@gmail.com",
-           comment = c(ORCID = "0000-0003-1557-8596"))
-Description: Generating testing data from various biodiversity data aggregators, QA and benchmarking scripts, checklists of sorts.
+Package: bddevops
+Title: bdverse's DevOps Package
+Version: 0.0.1
+Authors@R: c(
+    person(
+        "Tomer", "Gueta", 
+        email = "tomer.gu@gmail.com",
+        role = c("aut", "cre"),
+        comment = c(ORCID = '0000-0003-1557-8596')),
+    person(
+        "Thiloshon", "Nagarajah",
+        email = "thiloshon@gmail.com",
+        role = c("aut")),
+    person(
+        "Martynas", "Jo<U+010D>ys",
+        email = "martjocys@gmail.com",
+        role = c("aut"))
+    )
+Description: All the Devops stuff: testing data; CI monitoroing; testing reorts; benchmarking scripts; and checklists of sorts.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
@@ -23,6 +32,6 @@ Suggests:
     sinew,
     goodpractice
 Language: en-US
-RoxygenNote: 6.1.1
-URL: https://github.com/bd-R/bdtests
-BugReports: https://github.com/bd-R/bdtests/issues
+RoxygenNote: 7.1.1
+URL: https://github.com/bd-R/bddevops
+BugReports: https://github.com/bd-R/bddevops/issues

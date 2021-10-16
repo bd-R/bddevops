@@ -1,4 +1,4 @@
 library(testthat)
-library(bdtests)
+library(bddevops)
 
-test_check("bdtests")
+test_check("bddevops")
