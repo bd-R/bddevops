@@ -1,5 +1,5 @@
-# Created by https://www.gitignore.io/api/r
-# Edit at https://www.gitignore.io/?templates=r
+# Created by https://www.toptal.com/developers/gitignore/api/r
+# Edit at https://www.toptal.com/developers/gitignore?templates=r
 
 ### R ###
 # History files
@@ -8,10 +8,10 @@
 
 # Session Data files
 .RData
-.RDataTmp
 
 # User-specific files
 .Ruserdata
+
 
 # Example code in package build process
 *-Ex.R
@@ -24,8 +24,6 @@
 
 # RStudio files
 .Rproj.user/
-*.Rproj.user/
-*.Rproj.user*/
 
 # produced vignettes
 vignettes/*.html
@@ -42,8 +40,11 @@ vignettes/*.pdf
 *.utf8.md
 *.knit.md
 
+# R Environment Variables
+.Renviron
+
 ### R.Bookdown Stack ###
 # R package: bookdown caching files
 /*_files/
 
-# End of https://www.gitignore.io/api/r
+# End of https://www.toptal.com/developers/gitignore/api/r
